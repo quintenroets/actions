@@ -143,4 +143,4 @@ runs:
         fi
         install="${{ steps.activate-virtual-environment.outputs.path }}/python -m pip install"
         $install --upgrade pip
-        $install $requirement
+        $install "$requirement"
