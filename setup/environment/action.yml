@@ -31,7 +31,7 @@ runs:
   using: 'composite'
   steps:
     - name: Checkout code
-      if: ${{ inputs.dependency == '' }}
+      if: inputs.dependency == ''
       uses: actions/checkout@v4
       with:
         clean: false
@@ -49,7 +49,7 @@ runs:
       if: steps.check-system-dependencies.outputs.files_exists == 'true'
       shell: bash
       run: |
-        dependencies=$(cat ${{ inputs.system-dependencies-file }})
+        dependencies=$(cat "${{ inputs.system-dependencies-file }}")
         echo "dependencies=$dependencies" >> "$GITHUB_OUTPUT"
 
     - name: Install system dependencies
@@ -64,7 +64,7 @@ runs:
       run: |
         if [ ${{ inputs.python-version }} ]; then
           python_version=${{ inputs.python-version }}
-        elif [ -n ${{ inputs.dependency }} ]; then
+        elif [ -n "${{ inputs.dependency }}" ]; then
           python_version="3.11"
         else
           python_version=$(cat pyproject.toml | grep 'requires-python = ">=' | sed 's/requires-python = ">=//' | sed 's/"//')
@@ -74,7 +74,7 @@ runs:
     - name: Specify requirements
       if: ${{ inputs.dependency }}
       shell: bash
-      run: echo ${{ inputs.dependency }} > requirements.txt
+      run: echo "${{ inputs.dependency }}" > requirements.txt
 
     - name: Set up Python
       id: setup-python
@@ -88,7 +88,7 @@ runs:
       id: calculate-dependencies-hash
       shell: bash
       run: |
-        if [ -z ${{ inputs.dependency }} ]; then
+        if [ -z "${{ inputs.dependency }}" ]; then
           hash=${{ hashFiles('pyproject.toml') }}
         else
           hash=""
@@ -103,13 +103,13 @@ runs:
         save-always: true
         key:
           venv
-          ${{ inputs.environment }}
-          ${{ runner.os }}
-          ${{ steps.determine-python-version.outputs.python_version }}-
-          ${{ steps.calculate-dependencies-hash.outputs.hash }}-
-          ${{ inputs.repository }}-
-          ${{ inputs.dependency }}-
-          ${{ inputs.extra-dependency }}
+          "${{ inputs.environment }}"
+          "${{ runner.os }}"
+          "${{ steps.determine-python-version.outputs.python_version }}-"
+          "${{ steps.calculate-dependencies-hash.outputs.hash }}-"
+          "${{ inputs.repository }}-"
+          "${{ inputs.dependency }}-"
+          "${{ inputs.extra-dependency }}"
 
     - name: Activate virtual environment
       id: activate-virtual-environment
@@ -128,18 +128,18 @@ runs:
       if: steps.cache.outputs.cache-hit != 'true'
       shell: bash
       run: |
-        python -m venv ${{ inputs.venv-path }}
-        if [ ${{ inputs.dependency }} ]; then
-          requirement=${{inputs.dependency}}
+        python -m venv "${{ inputs.venv-path }}"
+        if [ "${{ inputs.dependency }}" ]; then
+          requirement="${{inputs.dependency}}"
         elif [ ${{ inputs.environment }} ]; then
           requirement=".[${{ inputs.environment }}]"
         else
           requirement="."
         fi
-        if [ ${{ inputs.editable }} ]; then
+        if [ "${{ inputs.editable }}" ]; then
           requirement="-e $requirement"
         fi
-        if [ ${{ inputs.extra-dependency }} ]; then
+        if [ "${{ inputs.extra-dependency }}" ]; then
           requirement="${{ inputs.extra-dependency }} $requirement"
         fi
         install="${{ steps.activate-virtual-environment.outputs.path }}/python -m pip install"
