@@ -135,13 +135,13 @@ runs:
         else
           requirement="."
         fi
-        if [ "${{ inputs.extra-dependency }}" ]; then
-          requirement="${{ inputs.extra-dependency }} $requirement"
-        fi
         install="${{ steps.activate-virtual-environment.outputs.path }}/python -m pip install"
         $install --upgrade pip
         if [ "${{ inputs.editable }}" ]; then
           $install -e "$requirement"
         else
           $install "$requirement"
+        fi
+        if [ "${{ inputs.extra-dependency }}" ]; then
+          $install "${{ inputs.extra-dependency }}"
         fi
