@@ -10,5 +10,5 @@ runs:
         dependency: "package-dev-tools >=0.5.0, <1"
 
     - name: Sync template
-      run: sync-template --token ${{ github.token }} --repository ${{ github.event.repository.name }}
+      run: sync-template --token ${{ github.token }} --repository ${{ github.repository }}
       shell: bash
