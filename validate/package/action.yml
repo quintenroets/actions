@@ -9,6 +9,11 @@ runs:
       with:
         extra-dependency: package-dev-tools
 
+    # Cached environment can contain previous commit
+    - name: Install current commit
+      shell: bash
+      run: pip install . --no-deps
+
     - name: Verify package
       shell: bash
       run: |
