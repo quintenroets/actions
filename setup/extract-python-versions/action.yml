@@ -9,10 +9,16 @@ outputs:
 runs:
   using: 'composite'
   steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        clean: false
+        show-progress: false
+
     - name: Setup environment
       uses: quintenroets/actions/setup/environment@main
       with:
-        extra-dependency: package-dev-tools
+        dependency: package-dev-tools
 
     - name: Extract Python version
       id: extract-python-versions
