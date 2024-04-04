@@ -129,7 +129,6 @@ runs:
         echo "path=$path" >> "$GITHUB_OUTPUT"
 
     - name: Install dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
       shell: bash
       run: |
         python -m venv "${{ inputs.venv-path }}"
