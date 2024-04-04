@@ -100,21 +100,6 @@ runs:
         fi
         echo "hash=$hash" >> "$GITHUB_OUTPUT"
 
-    - name: Cache virtual environment
-      id: cache
-      uses: actions/cache@v4
-      with:
-        path: ${{ inputs.venv-path }}
-        save-always: true
-        key:
-          venv
-          "${{ inputs.environment }}"
-          "${{ runner.os }}"
-          "${{ steps.determine-python-version.outputs.python_version }}-"
-          "${{ steps.calculate-dependencies-hash.outputs.hash }}-"
-          "${{ inputs.repository }}-"
-          "${{ inputs.extra-dependency }}"
-
     - name: Activate virtual environment
       id: activate-virtual-environment
       shell: bash
