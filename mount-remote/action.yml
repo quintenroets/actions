@@ -26,8 +26,8 @@ runs:
 
     - name: Run mount
       run: |
-        mount-remote
-          --remote ${{ inputs.remote-name }}
-          --path ${{ inputs.path }}
-          --rclone-secret ${{ inputs.rclone-secret }}
+        mount-remote \
+        --remote ${{ inputs.remote-name }} \
+        --path ${{ inputs.path }} \
+        --rclone-secret ${{ inputs.rclone-secret }}
       shell: bash
