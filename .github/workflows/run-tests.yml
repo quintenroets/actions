@@ -11,7 +11,7 @@ jobs:
       - name: Test mount
         uses: quintenroets/actions/mount-remote/@dev
         with:
-          rclone-secret: ${{ secrets.RCLONE }}
+          rclone-secret: secrets.RCLONE
 
   test-setup:
     name: Test setup
