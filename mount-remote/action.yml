@@ -1,0 +1,33 @@
+name: 'Setup environment'
+description: 'Setup environment in virtual environment'
+
+inputs:
+  rclone-secret:
+    description: "Decryption key for rclone configuration"
+  remote-name:
+    description: "Name of remote to mount"
+    default: "backup"
+  path:
+    description: "Local path to mount remote to"
+    default: ""
+
+outputs:
+  environment-path:
+    description: "The path to the Python binary in the virtual environment"
+    value: ${{ steps.activate-virtual-environment.outputs.path }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup dependencies
+      uses: quintenroets/actions/setup/environment@main
+      with:
+        dependency: git+https://github.com/quintenroets/backup.git@mount
+
+    - name: Run mount
+      run: |
+        mount-remote
+          --remote {{ inputs.remote-name }}
+          --path {{ inputs.path }}
+          --rclone-secret {{ inputs.rclone_secret }}
+      shell: bash

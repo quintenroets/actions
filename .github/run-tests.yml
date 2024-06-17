@@ -1,0 +1,26 @@
+name: Build
+
+env:
+  RCLONE: ${{ secrets.RCLONE }}
+
+on:
+  push:
+
+jobs:
+  test-mount:
+    name: Test mount
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test mount
+        uses: quintenroets/actions/mount-remote/@dev
+        with:
+          rclone-secret: secrets.RCLONE
+
+  test-setup:
+    name: Test setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test setup
+        uses: quintenroets/actions/setup/environment/@dev
+        with:
+          dependency: superpathlib
