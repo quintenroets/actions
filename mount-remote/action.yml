@@ -9,7 +9,7 @@ inputs:
     default: "backup"
   path:
     description: "Local path to mount remote to"
-    default: "/media/backup"
+    default: ""
 
 outputs:
   environment-path:

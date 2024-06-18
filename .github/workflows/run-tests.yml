@@ -14,7 +14,7 @@ jobs:
           rclone-secret: ${{ secrets.RCLONE }}
 
       - name: Test access
-        run: ls /media/backup | grep etc
+        run: ls /media/backup | grep -q etc
 
   test-setup:
     name: Test setup
