@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test mount
-        uses: quintenroets/actions/mount-remote/@dev
+        uses: quintenroets/actions/mount-remote/@main
         with:
           rclone-secret: ${{ secrets.RCLONE }}
 
@@ -21,6 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test setup
-        uses: quintenroets/actions/setup/environment/@dev
+        uses: quintenroets/actions/setup/environment/@main
         with:
           dependency: superpathlib
