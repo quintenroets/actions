@@ -19,10 +19,10 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - name: Setup dependencies
+    - name: Install backup dependency
       uses: quintenroets/actions/setup/environment@main
       with:
-        dependency: git+https://github.com/quintenroets/backup.git@mount
+        dependency: backupmaster
 
     - name: Run mount
       run: |
