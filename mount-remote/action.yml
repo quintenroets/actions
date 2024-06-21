@@ -10,6 +10,9 @@ inputs:
   path:
     description: "Local path to mount remote to"
     default: '""'
+  cache-mode:
+    description: "Rclone vfs-cache-mode option"
+    default: "writes"
 
 outputs:
   environment-path:
@@ -30,4 +33,5 @@ runs:
         --remote ${{ inputs.remote-name }} \
         --path ${{ inputs.path }} \
         --rclone-secret ${{ inputs.rclone-secret }}
+        --cache-mode ${{ inputs.cache-mode }}
       shell: bash
