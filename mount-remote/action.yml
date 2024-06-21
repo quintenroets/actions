@@ -32,6 +32,6 @@ runs:
         mount-remote \
         --remote ${{ inputs.remote-name }} \
         --path ${{ inputs.path }} \
-        --rclone-secret ${{ inputs.rclone-secret }}
+        --rclone-secret ${{ inputs.rclone-secret }} \
         --cache-mode ${{ inputs.cache-mode }}
       shell: bash
