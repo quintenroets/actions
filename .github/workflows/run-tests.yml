@@ -29,15 +29,11 @@ jobs:
     name: Test instantiate
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout template repository
-        uses: actions/checkout@v3
-        with:
-          repository: quintenroets/python-package-template
-
-      - name: Install dependencies
+      - name: Setup dependencies
         uses: quintenroets/actions/setup/environment@main
         with:
           dependency: package-dev-tools
+          repository: quintenroets/python-package-template
 
       - name: Run instantiation
         run: instantiate-new-project --project-name test-package
