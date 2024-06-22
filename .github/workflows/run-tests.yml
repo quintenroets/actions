@@ -46,3 +46,6 @@ jobs:
 
       - name: Visualize content
         run: tree python-package-template
+
+      - name: Verify content
+        run: tree python-package-template | grep test_package
