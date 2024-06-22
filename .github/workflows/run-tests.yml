@@ -41,6 +41,12 @@ jobs:
           repository: quintenroets/python-package-template
 
       - name: Debug
+        run: which pip
+
+      - name: Debug
+        run: which python
+
+      - name: Debug
         run: pip freeze
 
       - name: Run instantiation
