@@ -35,7 +35,7 @@ jobs:
           repository: quintenroets/python-package-template
 
       - name: Install dependencies
-        uses: quintenroets/actions/setup/environment@fix-instantiation-artifact
+        uses: quintenroets/actions/setup/environment@main
         with:
           dependency: package-dev-tools
 
