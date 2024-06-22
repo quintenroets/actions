@@ -33,6 +33,10 @@ jobs:
         uses: quintenroets/actions/setup/environment@main
         with:
           dependency: package-dev-tools
+
+      - name: Checkout template repository
+        uses: actions/checkout@v3
+        with:
           repository: quintenroets/python-package-template
 
       - name: Run instantiation
