@@ -41,17 +41,8 @@ jobs:
           repository: quintenroets/python-package-template
           path: python-package-template
 
-      - name: Debug
-        run: which pip
-
-      - name: Debug
-        run: which python
-
-      - name: Debug
-        run: pip freeze
-
       - name: Run instantiation
         run: instantiate-new-project --project-name test-package --path python-package-template
 
       - name: Visualize content
-        run: ls
+        run: ls python-package-template
