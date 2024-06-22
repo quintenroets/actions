@@ -30,7 +30,7 @@ jobs:
     name: Test instantiate
     runs-on: ubuntu-latest
     steps:
-      - name: Setup dependencies
+      - name: Install dependencies
         uses: quintenroets/actions/setup/environment@main
         with:
           dependency: package-dev-tools
