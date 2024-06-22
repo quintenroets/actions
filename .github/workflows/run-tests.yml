@@ -2,6 +2,7 @@ name: Run tests
 
 on:
   push:
+  workflow_dispatch:
 
 jobs:
   test-setup:
@@ -39,9 +40,11 @@ jobs:
         with:
           repository: quintenroets/python-package-template
 
+      - name: Debug
+        run: pip freeze
+
       - name: Run instantiation
         run: instantiate-new-project --project-name test-package
-        shell: bash
 
       - name: Visualize content
         run: ls
