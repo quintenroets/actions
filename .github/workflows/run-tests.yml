@@ -2,6 +2,7 @@ name: Run tests
 
 on:
   push:
+  workflow_dispatch:
 
 jobs:
   test-setup:
@@ -29,19 +30,22 @@ jobs:
     name: Test instantiate
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout template repository
-        uses: actions/checkout@v3
-        with:
-          repository: quintenroets/python-package-template
-
       - name: Install dependencies
         uses: quintenroets/actions/setup/environment@main
         with:
           dependency: package-dev-tools
 
+      - name: Checkout template repository
+        uses: actions/checkout@v3
+        with:
+          repository: quintenroets/python-package-template
+          path: python-package-template
+
       - name: Run instantiation
-        run: instantiate-new-project --project-name test-package
-        shell: bash
+        run: instantiate-new-project --project-name test-package --path python-package-template
 
       - name: Visualize content
-        run: ls
+        run: tree python-package-template
+
+      - name: Verify content
+        run: tree python-package-template | grep test_package
