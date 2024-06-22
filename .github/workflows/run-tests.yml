@@ -4,23 +4,44 @@ on:
   push:
 
 jobs:
-  test-mount:
-    name: Test mount
-    runs-on: ubuntu-latest
-    steps:
-      - name: Test mount
-        uses: quintenroets/actions/mount-remote/@main
-        with:
-          rclone-secret: ${{ secrets.RCLONE }}
-
-      - name: Test access
-        run: ls /media/backup | grep -q etc
-
   test-setup:
     name: Test setup
     runs-on: ubuntu-latest
     steps:
-      - name: Test setup
+      - name: Setup
         uses: quintenroets/actions/setup/environment/@main
         with:
           dependency: superpathlib
+
+  test-mount:
+    name: Test mount
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mount
+        uses: quintenroets/actions/mount-remote/@main
+        with:
+          rclone-secret: ${{ secrets.RCLONE }}
+
+      - name: Verify access
+        run: ls /media/backup | grep -q etc
+
+  test-instantiate:
+    name: Test instantiate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout template repository
+        uses: actions/checkout@v3
+        with:
+          repository: quintenroets/python-package-template
+
+      - name: Install dependencies
+        uses: quintenroets/actions/setup/environment@main
+        with:
+          dependency: package-dev-tools
+
+      - name: Run instantiation
+        run: instantiate-new-project --project-name test-package
+        shell: bash
+
+      - name: Visualize content
+        run: ls

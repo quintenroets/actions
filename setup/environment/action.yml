@@ -134,3 +134,7 @@ runs:
         if [ "${{ inputs.extra-dependency }}" ]; then
           $install "${{ inputs.extra-dependency }}"
         fi
+
+    - name: Cleanup artifacts
+      shell: bash
+      run: rm requirements.txt
