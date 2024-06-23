@@ -60,4 +60,7 @@ jobs:
           dependency: superpathlib
 
       - name: Debug
+        run: python -c "import sitecustomize; raise Exception"
+
+      - name: Debug
         run: python -c "import powertrace; powertrace.install_traceback_hooks(); raise Exception"
