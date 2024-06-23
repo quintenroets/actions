@@ -59,6 +59,10 @@ jobs:
         with:
           dependency: superpathlib
 
-      - name: Debug
+      - name: Visualize traceback
         run: |
           python -c "raise Exception" || :
+
+      - name: Verify traceback
+        run: |
+          python -c "raise Exception" 2>&1 | grep -qP "\e\[[0-9;]*m"
