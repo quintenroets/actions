@@ -49,3 +49,20 @@ jobs:
 
       - name: Verify content
         run: tree python-package-template | grep test_package
+
+  test-traceback-hooks:
+    name: Test traceback hooks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test traceback hooks
+        uses: quintenroets/actions/setup/environment/@powertrace
+        with:
+          dependency: superpathlib
+
+      - name: Visualize traceback
+        run: |
+          python -c "raise Exception" || :
+
+      - name: Verify color codes in traceback
+        run: |
+          python -c "raise Exception" 2>&1 | grep -qP "\e\[[0-9;]*m"

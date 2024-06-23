@@ -21,6 +21,9 @@ inputs:
   system-dependencies-file:
     description: "File that specifies system dependencies"
     default: "system-dependencies.txt"
+  install-traceback-hooks:
+    description: "Install detailed traceback visualization"
+    default: "true"
 
 outputs:
   environment-path:
@@ -133,6 +136,9 @@ runs:
         fi
         if [ "${{ inputs.extra-dependency }}" ]; then
           $install "${{ inputs.extra-dependency }}"
+        fi
+        if [ "${{ inputs.install-traceback-hooks == 'true' }}" ]; then
+          $install powertrace-hooks
         fi
 
     - name: Cleanup artifacts
