@@ -140,3 +140,8 @@ runs:
         if [ "${{ inputs.install-traceback-hooks == 'true' }}" ]; then
           $install powertrace-hooks
         fi
+
+    - name: Cleanup artifacts
+      if: ${{ inputs.dependency }}
+      shell: bash
+      run: rm requirements.txt
