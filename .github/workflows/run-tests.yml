@@ -63,6 +63,6 @@ jobs:
         run: |
           python -c "raise Exception" || :
 
-      - name: Verify traceback
+      - name: Verify color codes in traceback
         run: |
           python -c "raise Exception" 2>&1 | grep -qP "\e\[[0-9;]*m"
