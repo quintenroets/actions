@@ -21,6 +21,9 @@ inputs:
   system-dependencies-file:
     description: "File that specifies system dependencies"
     default: "system-dependencies.txt"
+  install-traceback-hooks:
+    description: "Install detailed traceback visualization"
+    default: "true"
 
 outputs:
   environment-path:
@@ -70,11 +73,6 @@ runs:
           python_version=$(cat pyproject.toml | grep 'requires-python = ">=' | sed 's/requires-python = ">=//' | sed 's/"//')
         fi
         echo "python_version=$python_version" >> "$GITHUB_OUTPUT"
-
-    - name: Specify requirements
-      if: ${{ inputs.dependency }}
-      shell: bash
-      run: echo "${{ inputs.dependency }}" > requirements.txt
 
     - name: Set up Python
       id: setup-python
@@ -134,8 +132,6 @@ runs:
         if [ "${{ inputs.extra-dependency }}" ]; then
           $install "${{ inputs.extra-dependency }}"
         fi
-
-    - name: Cleanup artifacts
-      if: ${{ inputs.dependency }}
-      shell: bash
-      run: rm requirements.txt
+        if [ "${{ inputs.install-traceback-hooks == 'true' }}" ]; then
+          $install powertrace-hooks
+        fi
