@@ -55,7 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test traceback hooks
-        uses: quintenroets/actions/setup/environment/@main
+        uses: quintenroets/actions/setup/environment/@powertrace
         with:
           dependency: superpathlib
 
