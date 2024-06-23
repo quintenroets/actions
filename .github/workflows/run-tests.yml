@@ -61,3 +61,4 @@ jobs:
 
       - name: Debug
         run: python -c "raise Exception"
+        continue-on-error: true
