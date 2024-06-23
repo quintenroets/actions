@@ -60,5 +60,5 @@ jobs:
           dependency: superpathlib
 
       - name: Debug
-        run: python -c "raise Exception"
-        continue-on-error: true
+        run: |
+          python -c "raise Exception" || :
