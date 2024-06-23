@@ -60,4 +60,4 @@ jobs:
           dependency: superpathlib
 
       - name: Debug
-        run: python -c "raise Exception"
+        run: python -c "import powertrace; powertrace.install_traceback_hooks(); raise Exception"
