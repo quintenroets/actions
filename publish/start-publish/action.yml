@@ -19,7 +19,7 @@ runs:
       id: extract-pypi-name
       shell: bash
       run: |
-        name=$( cat README.md | grep "^pip install " | sed 's/pip install //' | grep -v github | grep -v "\[" || : )
+        name=$( cat README.md | grep "^pip install " | sed 's/pip install //' | grep -v github | grep -v "\[" | head -n 1 || : )
         echo "PYPI_NAME=$name"
         echo "PYPI_NAME=$name" >> "$GITHUB_OUTPUT"
 
