@@ -24,7 +24,7 @@ jobs:
           rclone-secret: ${{ secrets.RCLONE }}
 
       - name: Verify access
-        run: ls /media/backup | grep -q etc
+        run: ls /media/backupmaster | grep -q etc
 
   test-instantiate:
     name: Test instantiate
