@@ -6,7 +6,7 @@ inputs:
     description: "Decryption key for rclone configuration"
   remote-name:
     description: "Name of remote to mount"
-    default: "backup"
+    default: "backupmaster"
   path:
     description: "Local path to mount remote to"
     default: '""'
