@@ -7,7 +7,7 @@ runs:
     - name: Install dependencies
       uses: quintenroets/actions/setup/environment@main
       with:
-        dependency: "package-dev-tools >=0.6.6, <1"
+        dependency: "package-dev-tools >=0.6.7, <1"
 
     - name: Sync template
       run: sync-template --token ${{ github.token }} --repository ${{ github.repository }}
