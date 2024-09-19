@@ -31,7 +31,7 @@ runs:
         version=$(jq -r ".version" package.json)
         cd dist
         zip -rq $dist .
-        if gh release list | grep v0.1.0 then; then
+        if gh release list | grep -q v$version; then
             gh release delete-asset -y v$version $dist
         else
             gh release create v$version --generate-notes
