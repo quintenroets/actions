@@ -70,7 +70,7 @@ runs:
         elif [ -n "${{ inputs.dependency }}" ]; then
           python_version="3.11"
         else
-          python_version=$(cat pyproject.toml | grep 'requires-python = ">=' | sed 's/requires-python = ">=//' | sed 's/"//')
+          python_version=$(cat pyproject.toml | grep 'requires-python = ">=' | sed 's/requires-python = ">=//' | sed 's/"//' | sed 's/,.*//')
         fi
         echo "python_version=$python_version" >> "$GITHUB_OUTPUT"
 
