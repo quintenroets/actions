@@ -79,17 +79,16 @@ runs:
       shell: bash
       run: echo "${{ inputs.dependency }}" > requirements.txt
 
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
+
     - name: Set up Python
       id: setup-python
       uses: actions/setup-python@v5
       with:
         python-version: ${{ steps.determine-python-version.outputs.python_version }}
-        cache: pip
-
-    # Setup Python saving pip cache post-completion fails if pip folder doesn't exist
-    - name: Create pip cache
-      shell: bash
-      run: mkdir -p ~/.cache/pip
 
     - name: Calculate dependencies hash
       # Only hash pyproject.toml if dependency not specified
@@ -127,7 +126,7 @@ runs:
         else
           requirement="."
         fi
-        install="${{ steps.activate-virtual-environment.outputs.path }}/python -m pip install"
+        install="uv pip install"
         $install --upgrade pip
         if [ "${{ inputs.editable }}" ]; then
           $install -e "$requirement"
