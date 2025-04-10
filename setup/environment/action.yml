@@ -84,12 +84,6 @@ runs:
       with:
         enable-cache: true
 
-    - name: Set up Python
-      id: setup-python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ steps.determine-python-version.outputs.python_version }}
-
     - name: Calculate dependencies hash
       # Only hash pyproject.toml if dependency not specified
       id: calculate-dependencies-hash
@@ -118,20 +112,24 @@ runs:
     - name: Install dependencies
       shell: bash
       run: |
-        python -m venv "${{ inputs.venv-path }}"
-        if [ "${{ inputs.dependency }}" ]; then
-          requirement="${{inputs.dependency}}"
-        elif [ ${{ inputs.environment }} ]; then
-          requirement=".[${{ inputs.environment }}]"
-        else
-          requirement="."
-        fi
+        uv venv "${{ inputs.venv-path }}" --python ${{ steps.determine-python-version.outputs.python_version }}
         install="uv pip install"
-        $install --upgrade pip
-        if [ "${{ inputs.editable }}" ]; then
-          $install -e "$requirement"
+
+        if [ -f "uv.lock" ]; then
+          uv sync --all-extras --all-groups
         else
-          $install "$requirement"
+          if [ "${{ inputs.dependency }}" ]; then
+            requirement="${{inputs.dependency}}"
+          elif [ ${{ inputs.environment }} ]; then
+            requirement=".[${{ inputs.environment }}]"
+          else
+            requirement="."
+          fi
+          if [ "${{ inputs.editable }}" ]; then
+            $install -e "$requirement"
+          else
+            $install "$requirement"
+          fi
         fi
         if [ "${{ inputs.extra-dependency }}" ]; then
           $install "${{ inputs.extra-dependency }}"
