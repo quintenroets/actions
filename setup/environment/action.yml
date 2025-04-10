@@ -84,12 +84,6 @@ runs:
       with:
         enable-cache: true
 
-    - name: Set up Python
-      id: setup-python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ steps.determine-python-version.outputs.python_version }}
-
     - name: Calculate dependencies hash
       # Only hash pyproject.toml if dependency not specified
       id: calculate-dependencies-hash
@@ -118,7 +112,7 @@ runs:
     - name: Install dependencies
       shell: bash
       run: |
-        uv venv "${{ inputs.venv-path }}"
+        uv venv "${{ inputs.venv-path }}" --python ${{ steps.determine-python-version.outputs.python_version }}
         install="uv pip install"
         
         if [ -f "uv.lock" ]; then
