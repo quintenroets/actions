@@ -18,4 +18,4 @@ runs:
     - name: Run tests
       shell: bash
       run: |
-        make test
+        make -s test

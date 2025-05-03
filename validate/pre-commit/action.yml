@@ -26,4 +26,4 @@ runs:
 
     - name: Run hooks
       shell: bash
-      run: make pre-commit
+      run: make -s pre-commit
