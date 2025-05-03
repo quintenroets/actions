@@ -19,7 +19,6 @@ runs:
           ${{ runner.os }}
           ${{ steps.determine-python-version.outputs.python_version }}
       with:
-        save-always: true
         path: |
           .mypy_cache
         key: ${{ env.KEY }}
