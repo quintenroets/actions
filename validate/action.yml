@@ -1,0 +1,29 @@
+name: 'Validate'
+description: 'Validate'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup environment
+      uses: quintenroets/actions/setup/environment@main
+      with:
+        environment: dev
+        editable: true
+
+    - name: Cache mypy
+      id: cache
+      uses: actions/cache@v4
+      env:
+        KEY:
+          mypy
+          ${{ runner.os }}
+          ${{ steps.determine-python-version.outputs.python_version }}
+      with:
+        path: |
+          .mypy_cache
+        key: ${{ env.KEY }}
+        restore-keys: ${{ env.KEY }}
+
+    - name: Validate
+      shell: bash
+      run: make -s validate
