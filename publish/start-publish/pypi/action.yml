@@ -10,10 +10,9 @@ runs:
         dependency: build
 
     - name: Build
-      run: python -m build
+      run: uv build
       shell: bash
 
     - name: Upload distribution to PyPI
-      uses: pypa/gh-action-pypi-publish@fb13cb306901256ace3dab689990e13a5550ffaa
-      with:
-        skip-existing: true
+      run: uv publish
+      shell: bash
