@@ -12,7 +12,7 @@ runs:
     # Cached environment can contain previous commit
     - name: Install current commit
       shell: bash
-      run: pip install . --no-deps
+      run: pip install .
 
     - name: Verify package
       shell: bash
