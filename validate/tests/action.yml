@@ -18,5 +18,4 @@ runs:
     - name: Run tests
       shell: bash
       run: |
-        export PATH=${{ steps.setup-environment.outputs.environment-path }}:$PATH
-        pytest
+        make -s test
