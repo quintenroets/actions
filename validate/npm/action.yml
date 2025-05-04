@@ -1,0 +1,12 @@
+name: Validate
+description: Validate
+
+runs:
+  using: composite
+  steps:
+    - name: Setup project
+      uses: quintenroets/actions/setup/npm@main
+
+    - name: Validate
+      shell: bash
+      run: make -s validate

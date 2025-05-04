@@ -4,23 +4,12 @@ description: Publish npm project on GitHub
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v4
-      with:
-        clean: false
-        show-progress: false
-
-    - name: Setup Node
-      uses: actions/setup-node@v4
-      with:
-        cache: npm
-
-    - name: Install dependencies
-      shell: bash
-      run: npm install
+    - name: Setup project
+      uses: quintenroets/actions/setup/npm@main
 
     - name: Build
       shell: bash
-      run: npm run build
+      run: make -s build
 
     - name: Publish on Github
       shell: bash
