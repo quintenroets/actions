@@ -1,11 +1,11 @@
 name: Publish project
-description: Publish npm project on GitHub
+description: Publish Bun project on GitHub
 
 runs:
   using: composite
   steps:
     - name: Setup project
-      uses: quintenroets/actions/setup/npm@main
+      uses: quintenroets/actions/setup/bun@main
 
     - name: Build
       shell: bash

@@ -1,4 +1,4 @@
-name: Setup npm project
+name: Setup bun project
 
 runs:
   using: composite
@@ -8,7 +8,5 @@ runs:
         clean: false
         show-progress: false
 
-    - name: Setup Node
-      uses: actions/setup-node@v4
-      with:
-        cache: npm
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
