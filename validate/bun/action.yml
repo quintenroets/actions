@@ -5,7 +5,7 @@ runs:
   using: composite
   steps:
     - name: Setup project
-      uses: quintenroets/actions/setup/npm@main
+      uses: quintenroets/actions/setup/bun@main
 
     - name: Validate
       shell: bash
