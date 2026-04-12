@@ -17,7 +17,7 @@ runs:
     - name: Bump version
       shell: bash
       run: |
-        bump2version --config-file .bumpversion.cfg ${{ inputs.part }}
+        bump2version --config-file config/bumpversion.cfg ${{ inputs.part }}
         git config --global user.email "quinten.roets@gmail.com"
         git config --global user.name "Quinten Roets"
         git add .
