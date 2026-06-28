@@ -48,15 +48,29 @@ runs:
       id: extract-system-dependencies
       if: steps.check-system-dependencies.outputs.files_exists == 'true'
       shell: bash
+      # rclone is installed via a dedicated action because apt only ships an outdated version
       run: |
-        dependencies=$(cat "${{ inputs.system-dependencies-file }}")
-        echo "dependencies=$dependencies" >> "$GITHUB_OUTPUT"
+        dependencies=$(cat "${{ inputs.system-dependencies-file }}" | tr ' ' '\n')
+        apt_packages=$(echo "$dependencies" | { grep -vx rclone || true; } | tr '\n' ' ' | xargs)
+        echo "apt-packages=$apt_packages" >> "$GITHUB_OUTPUT"
+        if echo "$dependencies" | grep -qx rclone; then
+          echo "needs-rclone=true" >> "$GITHUB_OUTPUT"
+        fi
 
     - name: Install system dependencies
-      if: steps.check-system-dependencies.outputs.files_exists == 'true'
+      if: steps.extract-system-dependencies.outputs.apt-packages != ''
       uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: ${{ steps.extract-system-dependencies.outputs.dependencies }}
+        packages: ${{ steps.extract-system-dependencies.outputs.apt-packages }}
+
+    - name: Install rclone
+      if: steps.extract-system-dependencies.outputs.needs-rclone == 'true'
+      uses: AnimMouse/setup-rclone@v1
+
+    - name: Make rclone available to sudo
+      if: steps.extract-system-dependencies.outputs.needs-rclone == 'true'
+      shell: bash
+      run: sudo ln -sf "$(command -v rclone)" /usr/local/bin/rclone
 
     - name: Determine Python version
       id: determine-python-version
