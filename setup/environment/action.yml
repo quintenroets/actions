@@ -30,6 +30,10 @@ outputs:
 runs:
   using: 'composite'
   steps:
+    - name: Force colored output
+      shell: bash
+      run: echo "FORCE_COLOR=1" >> "$GITHUB_ENV"
+
     - name: Checkout code
       if: inputs.dependency == ''
       uses: actions/checkout@v4
