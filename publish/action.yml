@@ -5,7 +5,7 @@ runs:
   using: composite
   steps:
     - name: Checkout source
-      uses: actions/checkout@v3
+      uses: actions/checkout@v5
       with:
         fetch-depth: 2
         # Need 2 most recent commits instead of only the most recent commit

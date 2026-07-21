@@ -36,7 +36,7 @@ runs:
 
     - name: Checkout code
       if: inputs.dependency == ''
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         clean: false
         show-progress: false
@@ -63,7 +63,7 @@ runs:
 
     - name: Install system dependencies
       if: steps.extract-system-dependencies.outputs.apt-packages != ''
-      uses: awalsh128/cache-apt-pkgs-action@latest
+      uses: awalsh128/cache-apt-pkgs-action@v1
       with:
         packages: ${{ steps.extract-system-dependencies.outputs.apt-packages }}
 
@@ -80,8 +80,8 @@ runs:
       id: determine-python-version
       shell: bash
       run: |
-        if [ ${{ inputs.python-version }} ]; then
-          python_version=${{ inputs.python-version }}
+        if [ -n "${{ inputs.python-version }}" ]; then
+          python_version="${{ inputs.python-version }}"
         elif [ -n "${{ inputs.dependency }}" ]; then
           python_version="3.11"
         else
@@ -95,7 +95,7 @@ runs:
       run: echo "${{ inputs.dependency }}" > requirements.txt
 
     - name: Set up uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
       with:
         enable-cache: true
         activate-environment: true
@@ -122,23 +122,23 @@ runs:
         if [ -f "uv.lock" ]; then
           uv sync --all-extras --all-groups
         else
-          if [ "${{ inputs.dependency }}" ]; then
-            requirement="${{inputs.dependency}}"
-          elif [ ${{ inputs.environment }} ]; then
+          if [ -n "${{ inputs.dependency }}" ]; then
+            requirement="${{ inputs.dependency }}"
+          elif [ -n "${{ inputs.environment }}" ]; then
             requirement=".[${{ inputs.environment }}]"
           else
             requirement="."
           fi
-          if [ "${{ inputs.editable }}" ]; then
+          if [ -n "${{ inputs.editable }}" ]; then
             $install -e "$requirement"
           else
             $install "$requirement"
           fi
         fi
-        if [ "${{ inputs.extra-dependency }}" ]; then
+        if [ -n "${{ inputs.extra-dependency }}" ]; then
           $install "${{ inputs.extra-dependency }}"
         fi
-        if [ "${{ inputs.install-traceback-hooks == 'true' }}" ]; then
+        if [ "${{ inputs.install-traceback-hooks }}" = "true" ]; then
           $install powertrace-hooks
         fi
 

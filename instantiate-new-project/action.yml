@@ -5,7 +5,7 @@ runs:
   using: 'composite'
   steps:
   - name: Checkout source
-    uses: actions/checkout@v3
+    uses: actions/checkout@v5
 
   - name: Install dependencies
     uses: quintenroets/actions/setup/environment@main
