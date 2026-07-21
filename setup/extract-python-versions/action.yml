@@ -23,4 +23,6 @@ runs:
     - name: Extract Python version
       id: extract-python-versions
       shell: bash
+      env:
+        FORCE_COLOR: ""
       run: echo "versions=$(extract-supported-python-versions)" >> "$GITHUB_OUTPUT"
